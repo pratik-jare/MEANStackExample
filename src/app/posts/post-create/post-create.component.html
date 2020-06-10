@@ -1,14 +1,19 @@
-<textarea row="6"  [value]="newPost" #postInput>
+<textarea row="6"  [(ngModel)]="enterdValue">
 </textarea>
 
+
 <!-- property bining below -->
+
+<!-- <textarea row="6"  [value]="newPost" #postInput>
+</textarea> -->
+
 <!-- <textarea row="6" [value]="'test'">
 </textarea>
 <textarea row="6" [value]="newPost">
 </textarea> -->
 
 <hr>
-<button (click)="onAddPost(postInput)">
+<button (click)="onAddPost()">
     Save post
 </button>
 
