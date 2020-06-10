@@ -1,0 +1,16 @@
+<textarea row="6"  [value]="newPost" #postInput>
+</textarea>
+
+<!-- property bining below -->
+<!-- <textarea row="6" [value]="'test'">
+</textarea>
+<textarea row="6" [value]="newPost">
+</textarea> -->
+
+<hr>
+<button (click)="onAddPost(postInput)">
+    Save post
+</button>
+
+<!--  event binding  (click)="onAddPost()" -->
+<p>{{newPost}}</p>
