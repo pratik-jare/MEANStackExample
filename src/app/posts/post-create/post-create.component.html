@@ -1,7 +1,12 @@
 <mat-card>
     <mat-card-content>
         <mat-form-field appearance="outline">
-            <textarea matInput row="6" [(ngModel)]="enterdValue">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [(ngModel)]="enteredTitle">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Content</mat-label>
+            <textarea matInput row="6" [(ngModel)]="enteredContent">
         </textarea>
         </mat-form-field>
         <button mat-raised-button (click)="onAddPost()" color="primary">
@@ -9,6 +14,8 @@
         </button>
     </mat-card-content>
 </mat-card>
+<br>
+<br>
 
 
 <!-- property bining below -->
@@ -21,7 +28,7 @@
 <textarea row="6" [value]="newPost">
 </textarea> -->
 
-<hr>
+<!-- <hr> -->
 
 <!--  event binding  (click)="onAddPost()" -->
-<p>{{newPost}}</p>
+<!-- <p>{{newPost}}</p> -->
