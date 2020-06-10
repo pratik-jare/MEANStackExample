@@ -1,5 +1,14 @@
-<textarea row="6"  [(ngModel)]="enterdValue">
-</textarea>
+<mat-card>
+    <mat-card-content>
+        <mat-form-field appearance="outline">
+            <textarea matInput row="6" [(ngModel)]="enterdValue">
+        </textarea>
+        </mat-form-field>
+        <button mat-raised-button (click)="onAddPost()" color="primary">
+            Save post
+        </button>
+    </mat-card-content>
+</mat-card>
 
 
 <!-- property bining below -->
@@ -13,9 +22,6 @@
 </textarea> -->
 
 <hr>
-<button (click)="onAddPost()">
-    Save post
-</button>
 
 <!--  event binding  (click)="onAddPost()" -->
 <p>{{newPost}}</p>
