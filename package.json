@@ -27,6 +27,7 @@
     "material": "^0.4.3",
     "mongoose": "^5.9.19",
     "rxjs": "~6.5.4",
+    "rxjs-compat": "^6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

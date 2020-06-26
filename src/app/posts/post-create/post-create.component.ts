@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
 import { NgForm } from '@angular/forms';
 import { PostsService } from '../posts.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -13,19 +14,37 @@ export class PostCreateComponent implements OnInit {
   enteredTitle = '';
   enteredContent = '';
 
+  public mode = 'create';
+  public postId = '';
+  public post: Post;
 
-
-  constructor(private postsService: PostsService) { }
+  constructor(private postsService: PostsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params.postId) {
+        this.mode = 'edit';
+        this.postId = params.postId;
+        this.postsService.getPost(this.postId).subscribe(postData => {
+          this.post = { id: postData._id, title: postData.title, content: postData.content };
+        });
+      } else {
+        this.mode = 'create';
+        this.postId = null;
+      }
+    });
   }
 
-  onAddPost(form: NgForm) {
+  onSavePost(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    this.postsService.addPost(form.value.title, form.value.content);
-    form.resetForm();
+    if (this.mode === 'create') {
+      this.postsService.addPost(form.value.title, form.value.content);
+      form.resetForm();
+    } else {
+      this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+    }
   }
 
 }
