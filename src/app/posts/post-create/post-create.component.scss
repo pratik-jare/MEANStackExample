@@ -7,3 +7,7 @@ mat-card,
 button {
   text-align: center;
 }
+
+input[type="file"] {
+  visibility: hidden;
+}
