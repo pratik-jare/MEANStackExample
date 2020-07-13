@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
@@ -9,7 +10,7 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[], postCount: number }>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   getPosts(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
@@ -63,6 +64,7 @@ export class PostsService {
       )
       .subscribe(responseData => {
         console.log(responseData);
+        this.router.navigate(['/']);
       });
   }
 
@@ -86,6 +88,7 @@ export class PostsService {
       .put("http://localhost:3000/api/posts/" + id, postData)
       .subscribe(response => {
         console.log(response);
+        this.router.navigate(['/']);
       });
   }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
-import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { mimeType } from "./mime-type.validator";
 
@@ -26,9 +26,8 @@ export class PostCreateComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private route: ActivatedRoute,
-    private router: Router,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createform();
@@ -68,13 +67,13 @@ export class PostCreateComponent implements OnInit {
         imagePath: postData.imagePath
       };
       this.spinner.hide();
-          this.form.setValue({
-            title: this.post.title,
-            content: this.post.content,
-            image: this.post.imagePath
-          });
-        });
-      }
+      this.form.setValue({
+        title: this.post.title,
+        content: this.post.content,
+        image: this.post.imagePath
+      });
+    });
+  }
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -97,7 +96,7 @@ export class PostCreateComponent implements OnInit {
         this.form.value.content,
         this.form.value.image
       );
-      this.router.navigateByUrl('/');
+      this.spinner.show();
     } else {
       this.postsService.updatePost(
         this.postId,
@@ -105,8 +104,7 @@ export class PostCreateComponent implements OnInit {
         this.form.value.content,
         this.form.value.image
       );
-      this.router.navigateByUrl('/');
+      this.spinner.show();
     }
-    this.form.reset();
   }
 }
