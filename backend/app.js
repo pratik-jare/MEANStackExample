@@ -3,17 +3,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const postsRoutes = require('./routes/posts');
-const userRoutes = require('./routes/user');
+const postsRoutes = require("./routes/posts");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
 mongoose.connect('mongodb+srv://Pratik_jare:PR@tik148@cluster0-1guyh.mongodb.net/Mean-Stack-Example', { useNewUrlParser: true })
   .then(() => {
-    console.log('connected to Database !');
+    console.log("Connected to database!");
   })
   .catch(() => {
-    console.log('Connection Failed');
+    console.log("Connection failed!");
   });
 
 app.use(bodyParser.json());
