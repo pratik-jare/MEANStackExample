@@ -8,7 +8,9 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
-mongoose.connect('mongodb+srv://Pratik_jare:PR@tik148@cluster0-1guyh.mongodb.net/Mean-Stack-Example', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://Pratik_jare:' +
+  process.env.MONGO_ATLAS_PW +
+  '@cluster0-1guyh.mongodb.net/Mean-Stack-Example', { useNewUrlParser: true })
   .then(() => {
     console.log("Connected to database!");
   })
