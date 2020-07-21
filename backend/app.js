@@ -6,11 +6,12 @@ const mongoose = require("mongoose");
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
 
+const baseconfig = require('./baseConf');
+
 const app = express();
 
 mongoose.connect('mongodb+srv://Pratik_jare:' +
-  process.env.MONGO_ATLAS_PW +
-  '@cluster0-1guyh.mongodb.net/Mean-Stack-Example', { useNewUrlParser: true })
+  baseconfig.mongoPassword + '@cluster0-1guyh.mongodb.net/Mean-Stack-Example', { useNewUrlParser: true })
   .then(() => {
     console.log("Connected to database!");
   })
@@ -20,8 +21,10 @@ mongoose.connect('mongodb+srv://Pratik_jare:' +
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static(path.join("backend/images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/", express.static(path.join(__dirname, "meanStackPractice")));
 
+// if angular + node in one folder then no need to use below syntax
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -35,8 +38,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// till here 
+
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
+
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "meanStackPractice", "index.html"));
+});
 
 module.exports = app;
 

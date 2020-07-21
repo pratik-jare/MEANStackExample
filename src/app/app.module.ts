@@ -38,3 +38,17 @@ import { PostsModule } from "./posts/posts.module";
   entryComponents: [ErrorComponent]
 })
 export class AppModule { }
+
+
+// comments to build 
+// step 1 - ng build --prod
+// if error
+// step 2 - enviroment.prod file apiUrl the api url of nodejs upladed link and add /api at last
+// step 3 - ng build --prod
+// it will create new folder that upload to aws s3 and create new bucket
+
+// for making both one 
+// "outputPath": "dist/meanStackPractice",
+//
+//
+//
