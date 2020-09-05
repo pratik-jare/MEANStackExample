@@ -3,18 +3,21 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 
+import { map } from "rxjs/operators";
 import { environment } from './../../environments/environment';
 import { AuthData } from "./auth-data.model";
 
-const BACKEND_URL = environment.apiUrl + '/user';
+const BACKEND_URL = environment.apiUrl + '/user/';
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
+  private users: AuthData[] = [];
   private isAuthenticated = false;
   private token: string;
   private tokenTimer: any;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
+  private usersUpdated = new Subject<{ users: AuthData[], userCount: number }>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -32,6 +35,38 @@ export class AuthService {
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
+  }
+
+  getUsers(usersPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    this.http.get<{ message: string; users: any; maxUsers: number }>(
+      BACKEND_URL + queryParams
+    ).pipe(
+      map(userData => {
+        return {
+          users: userData.users.map(user => {
+            return {
+              email: user.email,
+              password: user.password,
+              id: user._id,
+            };
+          }),
+          maxUsers: userData.maxUsers
+        };
+      })
+    ).subscribe(formatedUserData => {
+      console.log(formatedUserData);
+      this.users = formatedUserData.users;
+      this.usersUpdated.next({
+        users: [...this.users],
+        userCount: formatedUserData.maxUsers
+      });
+    });
+  }
+
+
+  getUserUpdateListener() {
+    return this.usersUpdated.asObservable();
   }
 
   createUser(email: string, password: string) {

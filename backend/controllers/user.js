@@ -58,3 +58,30 @@ exports.userLogin = (req, res, next) => {
         });
     });
 }
+
+exports.getUsers = (req, res, next) => {
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
+    const userQuery = User.find();
+    let fetchedUsers;
+    if (pageSize && currentPage) {
+        userQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }
+    userQuery.then(documents => {
+        documents.forEach(element => {
+            element.password = bcrypt.decodeBase64(element.password);
+        });
+        fetchedUsers = documents;
+        return User.estimatedDocumentCount();
+    }).then(count => {
+        res.status(200).json({
+            message: "users fetched successfully!",
+            users: fetchedUsers,
+            maxUsers: count
+        });
+    }).catch(error => {
+        res.status(500).json({
+            message: "Fetching users failed!"
+        })
+    });
+}

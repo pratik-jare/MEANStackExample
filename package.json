@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chokidar": "^3.4.0",
+    "dcrypt": "0.0.2",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",
